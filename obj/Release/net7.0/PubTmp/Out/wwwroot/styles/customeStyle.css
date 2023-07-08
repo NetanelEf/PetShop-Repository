@@ -1,0 +1,137 @@
+﻿.container-post {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #e6ecf0;
+    padding-bottom: 10px;
+    flex: 1;
+    border: 1px solid #e6ecf0;
+    padding: 15px 20px;
+    margin: 0 auto;
+    max-width: 600px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background: ghostwhite;
+    backdrop-filter: drop-shadow(50%);
+}
+
+.container-post::-webkit-scrollbar {
+    display: none;
+}
+
+.container-post-author-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.container-post-header {
+    display: inline-flex;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+}
+
+.container-post-author {
+    font-size: 15px;
+    font-weight: 700;
+    color: #14171a;
+    margin-right: 5px;
+}
+
+.container-post-nick {
+    color: #5b7083;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.container-post-age {
+    margin-left: 5px;
+    color: #657786;
+}
+
+.container-post-image {
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+.container-post-main {
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.container-comment-section {
+    border: 1px solid #e6ecf0;
+    border-top: none;
+    padding: 15px;
+}
+
+.comment-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 40px;
+}
+
+.comment-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #14171a;
+}
+
+.comment-section-counter {
+    font-size: 14px;
+    color: #657786;
+}
+
+.container-post-comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.container-post-comment-author-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.container-post-comment-content {
+    flex: 1;
+}
+
+.container-post-comment-header {
+    display: flex;
+    align-items: center;
+}
+
+.container-post-comment-author {
+    font-size: 16px;
+    font-weight: 700;
+    color: #14171a;
+    margin-right: 5px;
+}
+
+.container-post-comment-nick {
+    color: #5b7083;
+    font-size: 16px;
+}
+
+.container-post-comment-text {
+    font-size: 16px;
+    color: #14171a;
+    margin-top: 5px;
+}
+
+.container-divider {
+    height: 100%;
+    width: 10px;
+    border: none;
+    border-radius: 0;
+    background: linear-gradient( 100deg, rgba(243, 8, 76, 1) 0%, rgba(1,1,1,1) 100% );
+    padding-bottom: 100%;
+}
+

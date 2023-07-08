@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WebApplication1.Models.Animals>
+@{
+    ViewBag.Title = "View Animal";
+    Layout = "_Layout";
+}
+<style>
+    body {
+        background-image: url('@Url.Content("~/Images/loginregisterbg.jpg")');
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+@{
+    var str = TempData["Errors"]?.ToString();
+    if (!string.IsNullOrEmpty(str))
+    {
+        str = str!.Replace("\r\n", "\\r\\n");
+        <script>alert('@str');</script>
+    }
+}
+
+<div class="container-post">
+    <img class="container-post-author-logo" src="data:image;base64,@Convert.ToBase64String(Model.First().Image!)" />
+    <div class="container-post-main">
+        <div class="container-post-header">
+            <div class="container-post-name">
+                @Model.First().AnimalName
+            </div>
+            <div class="container-post-age">
+                Age: @Model.First().AnimalAge
+            </div>
+        </div>
+        <div class="container-post-content">
+            @Model.First().Description
+            <img class="Container-post-image" src="data:image;base64,@Convert.ToBase64String(Model.First().Image!)" />
+        </div>
+
+        <div class="comment-section-header">
+            <span class="comment-section-title">Comments</span>
+            <span class="comment-section-counter">@ViewBag.CommentsCount</span>
+        </div>
+        <div class="comment-section-content">
+            @{
+                foreach (var comment in ViewBag.Comments)
+                {
+                    <div class="container-post-comment">
+                        <img class="container-post-comment-author-logo" src="data:image;base64,@Convert.ToBase64String(Model.First().Image!)" alt="Avatar">
+                        <div class="container-post-comment-content">
+                            <div class="container-post-comment-header">
+                                <span class="container-post-comment-author">@comment.UserNamePosted</span>
+                            </div>
+                            <div class="container-post-comment-text">
+                                @comment.Comment
+                            </div>
+                        </div>
+                    </div>
+                }
+             }
+             @{
+                if(User.Identity!.IsAuthenticated)
+                {
+                    <form asp-action="AddComment" asp-route-animalName="@Model.First().AnimalName" method="post">
+                        <div class="container-post-comment">
+                            <textarea class="form-control" name="commentText" cols="40" rows="5">Write your comment</textarea>
+                        </div>
+                        <input type="submit" class="btn btn-dark btn-block" value="Add" />
+                    </form>
+                }
+            }
+        </div>
+    </div>
+</div>

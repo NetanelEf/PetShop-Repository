@@ -1,0 +1,94 @@
+﻿@model WebApplication1.Models.AdminPageModels;
+
+@{
+    ViewData["Title"] = "UserChangeAuth";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/styles/loginSheet.css" rel="stylesheet" />
+
+<style>
+    body {
+        background-image: url('@Url.Content("~/Images/loginregisterbg.jpg")');
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<script type="text/javascript" src="~/lib//jquery/dist/jquery.js"></script>
+<script>
+    function UpdateUser(id) {
+        $.ajax({
+            url: "/account/UpdateUserAuth/" + "?userID=" + id,
+            type: "GET",
+            success: function (data) {
+                alert("User authentication updated successfully.");
+            },
+            error: function (xhr, status, error) {
+                alert("AJAX error:", error);
+            }
+        });
+    }
+
+    function test(){
+        alert("this is test!!!");
+    }
+</script>
+
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="card" style="height: 1300px;">
+        <div>
+            <form asp-controller="" asp-action="" method="post">
+                <h1 class="fw-light text-center">Add Administrator Role To User</h1>
+                <div class="form px-4 pt-5">
+                    <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+                        <table class="table table-striped table-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Is Admin</th>
+                            </tr>
+                            <tbody>
+                                @{
+
+                                    var id = 1;
+                                    foreach (var user in Model.IdentityUsers)
+                                    {
+                                        <tr>
+                                            <th scope="row">@id</th>
+                                            <td>@user.UserName</td>
+                                            <td>
+                                                @{
+                                                    if (ViewBag.Admins.Contains(user.UserName))
+                                                    {
+                                                        if (user.UserName!.Equals(User.Identity!.Name))
+                                                        {
+                                                            <input type="checkbox" name="isAdmin" checked onclick="UpdateUser('@user.Id')" disabled/>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="checkbox" name="isAdmin" checked onclick="UpdateUser('@user.Id')" />
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" name="isAdmin" onclick="UpdateUser('@user.Id')" />
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                        id++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <input type="submit" class="btn btn-dark btn-block" value="Add" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

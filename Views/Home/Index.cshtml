@@ -1,0 +1,78 @@
+﻿@model IEnumerable<WebApplication1.Models.Animals>
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<style>
+    .homepage-background{
+        background-image: url('@Url.Content("~/Images/HomepageBG.jpg")');
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 50%;
+    }
+</style>
+
+
+<html>
+<head>
+</head>
+<body>
+    <!--
+        Goals for project as of now:
+
+        bonus:
+        1. testing
+        2. firebase?
+        3. change the design
+        4. Email/Phone verification
+    -->
+
+    <!--Header-->
+    <div class="homepage-background">
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light" style="font-size: 70px;">My Pet Shop!</h1>
+                    <p class="lead"><strong>Welcome to my Pet Shop web MVC project! This is the home page with the two most rated pets I have in the store currently! Be sure to signup to leave a comment! </strong></p>                </div>
+            </div>
+        </section>
+    </div>
+
+    <!--This is the Pet Section-->
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @{
+                    var i = 0;
+                    foreach (var animal in Model)
+                    {
+                        <div class="col" >
+                            <div class="card shadow-sm" style="background-color: #fffcfc;">
+                                <svg class="bd-placeholder-img card-img-overlay" width="50%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>@animal.AnimalName</title><img src="data:image;base64,@Convert.ToBase64String(animal.Image!)" width="50%" height="225" /></svg>
+                                <div class="card-body" style="background-color: #d4ffc7;">
+                                    <p class="card-text">@animal.Description</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a asp-controller="Home" asp-action="ViewAnimal" asp-route-actionAnimalName="@animal.AnimalName" type="button" class="btn btn-sm btn-outline-secondary">View</a>
+                                        </div>
+                                        <small class="text-muted">This pet has @ViewBag.Rating[i].CommentCount comments</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        i++;
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

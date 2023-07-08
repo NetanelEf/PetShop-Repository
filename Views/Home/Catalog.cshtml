@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Catalog";
+    Layout = "_Layout";
+}
+
+
+<!--This is Catalog Page - Goals for this page are:
+    1. Show a list of all the animals in the DB
+    2. Allow the user to view the comments for each pet
+    3. Maybe show each Animal through sidebar?
+
+    4. Maybe delete the table and instead show the twitter like format
+    5. Add category dropdown
+-->
+
+<style>
+    .container-divider {
+        height: 100%;
+        width: 10px;
+        border: none;
+        border-radius: 0;
+        background: linear-gradient(100deg, rgba(243, 8, 76, 1) 0%, rgba(1, 1, 1, 1) 100%);
+        padding-bottom: 100%;
+    }
+
+    .container-catalog-background { 
+        background-image: url('@Url.Content("~/Images/categoryBG.png")');
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        flex: 1;
+        overflow: auto;
+    }
+
+    .edit-button {
+        border: 1px;
+        border-radius: 1px;
+        height: 30px;
+        width: 30px;
+        margin-left: 100px;
+    }
+
+    .edit-button-image {
+        width: 15px;
+        height: 15px;
+    }
+</style>
+
+<div class="row" style="display: flex;">
+    <div>
+        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px; flex: 1;">
+            <div style="display:flex;">
+                <div style="flex:1">
+                    <a asp-action="Catalog" class="navbar-brand" style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #171717 ">
+                        <svg class="bi me-2" width="30" height="24"><use xlink:href="~/Images/ShibaInu.jpg"></use></svg>
+                        <span class="fs-5 fw-semibold">Animals</span>
+                    </a>
+                </div>
+                <div style="flex:1; padding-top:5px;">
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select category
+                        </button>
+                        <div class="dropdown-menu">
+                            @{ 
+                                var i = 1;
+                                foreach (var category in ViewBag.Categories)
+                                {
+                                    <a asp-action="CatalogWithID" asp-route-categoryID="@i" class="dropdown-item">@category.CategoryName</a>
+                                    i++;
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group list-group-flush border-bottom scrollarea">
+                @foreach (var animal in Model)
+                {
+                    <a asp-action="ViewAnimal" asp-route-actionAnimalName="@animal.AnimalName" class="list-group-item list-group-item-action py-3 lh-tight">
+                        <div class="d-flex w-100 align-items-center justify-content-between">
+                            <strong class="mb-1">@animal.AnimalName</strong>
+                        </div>
+                        <div class="col-10 mb-1 small">@animal.Description</div>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container-divider"></div>
+    <div class="container-catalog-background">
+        @foreach (var animal in Model)
+        {
+                <div class="container-post">
+                <img class="container-post-author-logo" src="data:image;base64,@Convert.ToBase64String(animal.Image)" />
+                    <div class="container-post-main">
+                        <div style="display:flex">
+                            <div class="container-post-header" style="flex:1">
+                                <div class="container-post-name">
+                                    @animal.AnimalName
+                                </div>
+                                <div class="container-post-age">
+                                    Age: @animal.AnimalAge
+                                </div>
+                            </div>
+                            @{
+                            if (User.IsInRole("Administrator"))
+                                {
+                                    <form asp-action="UpdateAnimals" asp-route-animalId="@animal.AnimalID" method="post">
+                                        <div style="flex:1">
+                                        <button class="edit-button" type="submit">
+                                                <img src="~/Images/edit.png" class="edit-button-image" alt="buttonpng" border="0" />
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <form asp-action="DeleteAnimal" asp-route-deleteAnimalId="@animal.AnimalID" method="post">
+                                        <div style="flex:1">
+                                            <button class="edit-button" type="submit">
+                                                <img src="~/Images/garbage.png" class="edit-button-image" alt="buttonpng" border="0" />
+                                            </button>
+                                        </div>
+                                    </form>
+                                }
+                            }
+                        </div>
+                        <div class="container-post-content">
+                            @animal.Description
+                        <img class="Container-post-image" src="data:image;base64,@Convert.ToBase64String(animal.Image)" />
+                        </div>
+                        <div class="comment-section-header">
+                        </div>
+
+                    <form method="get" asp-action="ViewAnimal" asp-route-actionAnimalName="@animal.AnimalName">
+                        <div class="comment-section-content">
+                            <button type="submit" class="btn btn-dark btn-block" name="actionAnimalName" value="@animal.AnimalName">Press Here To View Comments</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+        }
+    </div>
+</div>

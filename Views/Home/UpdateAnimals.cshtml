@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.Animals;
+@{
+    ViewBag.Title = "EditAnimal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background-image: url('@Url.Content("~/Images/loginregisterbg.jpg")');
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+@{
+    var str = TempData["Errors"]?.ToString();
+    if (!string.IsNullOrEmpty(str))
+    {
+        str = str!.Replace("\r\n", "\\r\\n");
+        <script>alert('@str');</script>
+    }
+}
+
+<h1 class="fw-light text-center" style="color:white;">Edit Animal:</h1>
+
+<form asp-action="EditAnimals" asp-route-updatedAnimalID="@Model.AnimalID" method="post" enctype="multipart/form-data">
+    <div class="container-post">
+        <img class="container-post-author-logo" src="data:image;base64,@Convert.ToBase64String(Model.Image!)" />
+        <div class="container-post-main">
+            <div class="container-post-header">
+                <div class="container-post-name">
+                    <input type="text" name="AnimalName" placeholder="@Model.AnimalName" />
+                </div>
+                <div class="container-post-age">
+                    <input type="number" name="AnimalAge" placeholder="@Model.AnimalAge" /> 
+                </div>
+            </div>
+            <div class="container-post-content">
+                <input type="text" name="AnimalDescription" placeholder="@Model.Description" style="width:100%; height:100%;" /> 
+                <img class="Container-post-image" src="data:image;base64,@Convert.ToBase64String(Model.Image!)" />
+                <input type="file" name="newImage" class="form-control" value="Upload Image:" />
+            </div>
+
+            <input type="submit" class="btn btn-dark btn-block" value="Edit" style="margin-top:10px;"/>
+        </div>
+    </div>
+</form>

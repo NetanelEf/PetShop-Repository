@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "AdminPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/styles/loginSheet.css" rel="stylesheet" />
+
+<style>
+    body {
+        background-image: url('@Url.Content("~/Images/loginregisterbg.jpg")');
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+@{
+    var str = TempData["Errors"]?.ToString();
+    if (!string.IsNullOrEmpty(str))
+    {
+        str = str!.Replace("\r\n", "\\r\\n");
+        <script>alert('@str');</script>
+    }
+}
+
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="card" style="height:500px;">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item text-center">
+                <a class="nav-link active btl" id="pills-home-tab" data-toggle="pill" href="#pills-animal" role="tab" aria-controls="pills-home" aria-selected="true">Animal</a>
+            </li>
+            <li class="nav-item text-center">
+                <a class="nav-link btr" id="pills-profile-tab" data-toggle="pill" href="#pills-category" role="tab" aria-controls="pills-profile" aria-selected="false">Category</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-animal" role="tabpanel" aria-labelledby="pills-home-tab">
+                <form asp-controller="home" asp-action="AddAnimalToDB" method="post" enctype="multipart/form-data">
+                    <h1 class="fw-light text-center">Add Animal To Database</h1>
+                    <div class="form px-4 pt-5">
+                        <input type="text" name="animalName" class="form-control" placeholder="Animal Name"/>
+                        <input type="number" name="animalAge" class="form-control" placeholder="Animal Age" />
+                        <input type="text" name="description" class="form-control" placeholder="Animal Description" />
+
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="categoryID">
+                            <option value="0" selected>Choose Category</option>
+                            @{
+                                var i = 1;
+                                foreach (var category in ViewBag.Categories)
+                                {
+                                    <option value="@i" name="categoryID">@category.CategoryName</option>
+                                    i++;
+                                }
+                            }
+                        </select>
+                        <input type="file" name="image" class="form-control" value="Upload Image:" />
+                        <input type="submit" class="btn btn-dark btn-block" value="Add" />
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="pills-category" role="tabpanel" aria-labelledby="pills-home-tab">
+                <form asp-controller="home" asp-action="AddCategoryToDB" method="post">
+                    <h1 class="fw-light text-center">Add Category To Database</h1>
+                    <div class="form px-4 pt-5">
+                        <input type="text" name="CategoryName" class="form-control" placeholder="Category Name"/>
+                        <input type="submit" class="btn btn-dark btn-block" value="Add" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
