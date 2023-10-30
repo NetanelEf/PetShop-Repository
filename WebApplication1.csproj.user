@@ -12,7 +12,7 @@
     <WebStackScaffolding_LayoutPageFile>~/Views/Shared/_Layout.cshtml</WebStackScaffolding_LayoutPageFile>
     <WebStackScaffolding_EnablerDialogWidth>650</WebStackScaffolding_EnablerDialogWidth>
     <ActiveDebugProfile>http</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>C:\Users\user\Desktop\Folders\Netanel\Programming\Sela\Projects\PetShop\WebApplication1\WebApplication1\Properties\PublishProfiles\IISProfile.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\user\Desktop\Folders\Netanel\Programming\Sela\Projects\PetShop\WebApplication1\WebApplication1\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
